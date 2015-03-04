@@ -1,0 +1,27 @@
+<html ng-app="app">
+<head>
+  <title>Color test with AngularJS</title>
+</head>
+<body ng-controller="ColorController">
+
+
+  <div class="test" style="background-color:blue"> prova colori</div>
+  <div class="test" ng-style="myStyle"> prova colori {{alt}}</div>
+
+
+  <pre>background <input ng-model="myBkg"> <input type="button" value="set" ng-click="myStyle['background-color']=myBkg;"></pre>
+
+  <pre>myStyle={{myStyle}}</pre>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+  <script>
+    var app = angular.module("app", []);
+    app.controller('ColorController', ['$scope', function ($scope) {
+      $scope.hours = 34;
+      $scope.myBkg="#E2DF9A";
+      $scope.myStyle={"background-color" : $scope.myBkg};
+    }]);
+  </script>
+</body>
+
+</html>

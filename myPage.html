@@ -1,0 +1,24 @@
+<html data-ng-app="myapp">
+<head>
+  <title>Hello World in AngularJS</title>
+</head>
+<body>
+
+<input ng-model="name"> Hello {{ name }}
+<div pippo> bye </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script>
+var app = angular.module('myapp', []);
+
+app.directive('pippo', function() {
+  return {
+      restrict: 'AE',
+      replace: 'true',
+      template: '<input type="text"/>'
+  };
+});
+</script>
+</body>
+</html>

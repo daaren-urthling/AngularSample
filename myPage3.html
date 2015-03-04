@@ -1,0 +1,77 @@
+<html ng-app="app">
+<head>
+  <title>Hello World in AngularJS</title>
+</head>
+<body>
+
+<ng-view></ng-view>
+<div ng-controller="FooterController">
+{{hours}} hours left
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+
+<!-- Template -->
+<script type="text/ng-template" id="/todos.html">
+<h1>{{LearningPath}}</h1>
+Search: <input type="text" ng-model="search.name">
+<ul>
+  <li ng-repeat="todo in todos | filter: search">
+    <input type="checkbox" ng-model="todo.completed">
+    <a href="#/{{$index}}">{{ todo.name }}</a>
+    <input type="text" ng-model="todo.days">
+    days
+  </li>
+</ul>
+</script>
+
+<script type="text/ng-template" id="/todoDetails.html">
+  <h1>{{ todo.name }}</h1>
+  completed: <input type="checkbox" ng-model="todo.completed">
+  note: <textarea>{{ todo.note }}</textarea>
+</script>
+
+<script>
+  var app = angular.module("app", ['ngRoute']);
+
+  app.factory('Todos', function(){
+    return [
+      { name: 'Master HTML/CSS/Javascript', completed: true, days:0, note: 'add notes...' },
+      { name: 'Learn AngularJS', completed: false, days:2, note: 'add notes...' },
+      { name: 'Build NodeJS backend', completed: false, days:3, note: 'add notes...' },
+      { name: 'Get started with ExpressJS', completed: false, days:5, note: 'add notes...' },
+      { name: 'Setup MongoDB database', completed: false, days:2, note: 'add notes...' },
+      { name: 'Be awesome!', completed: false, days:4, note: 'add notes...' },
+    ]});
+
+  app.controller('TodoController', ['$scope', 'Todos', function ($scope, Todos) {
+    $scope.LearningPath="Our awesome learning path"
+    $scope.todos = Todos;
+  }]);
+
+  app.controller('TodoDetailCtrl', ['$scope', '$routeParams', 'Todos', function ($scope, $routeParams, Todos) {
+      $scope.todo = Todos[$routeParams.id];
+    }]);
+
+  app.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: '/todos.html',
+        controller: 'TodoController'
+      })
+      .when('/:id', {
+        templateUrl: '/todoDetails.html',
+        controller: 'TodoDetailCtrl'
+     });
+  }]);
+
+  app.controller('FooterController', ['$scope', function ($scope) {
+    $scope.hours = 34;
+  }]);
+</script>
+
+
+
+</body>
+</html>
